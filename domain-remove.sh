@@ -76,7 +76,7 @@ function update_log() {
 function remove_domain(){
 	# Required
     if [[ $1 == "" ]]; then
-	    echo $0: "example ==> domain remove domainname.extension"
+	    echo $0: "=domain=> usage example: domain remove domainname.extension"
 	    return 1
     fi
 
@@ -87,16 +87,19 @@ function remove_domain(){
 
 	read -p "== Press [y] to REMOVE ${LOCAL_DOMAIN_URL} " -n 1 -r
 
-	printf "\n"
+	printf "\n\n"
 
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
+		printf "=domain=> Working on ${DOMAIN}\n"
+		sleep 1
+
 		remove_local_domain
 		remove_database
 		update_hosts_file
 		update_apache
 		update_log
 
-		printf "===> Domain ${DOMAIN} Removed\n\n"
+		printf "=domain=> Domain ${DOMAIN} Removed\n\n"
 	fi
 }
 

@@ -20,6 +20,7 @@ function config_check() {
 	if [[ $DB_PASS == "PASSWORD" || $DB_PASS == "" ]]; then
 	    echo "Error: MySQL and WordPress login details need to be set in the config.sh first."
 	    return 1
+	    exit 1
 	fi
 }
 
@@ -210,7 +211,7 @@ function update_apache() {
 # Log Domain
 function log_domain() {
 	echo ${DOMAIN} >> ${DOMAINS_LIST}
-	printf "===> Domain Logged\n"
+	printf "===> Logged ${DOMAIN}\n"
 }
 
 
@@ -218,12 +219,16 @@ function log_domain() {
 function install_domain() {
 	# Required
     if [[ $1 == "" ]]; then
-	    echo $0: "example ==> domain install domainname.extension"
+	    echo $0: "=domain=> usage example: domain install domainname.extension"
 	    return 1
     fi
 
     # Check User Config Is Setup
-	config_check
+	if [[ $DB_PASS == "PASSWORD" || $DB_PASS == "" ]]; then
+		echo "=domain=> Add MySQL and WordPress login details to:"
+		echo "          ${SITE_PATH}/config.sh"
+	    return 1
+	fi
 
 	# Start Display
 	clear
@@ -232,9 +237,12 @@ function install_domain() {
 
 	read -p "== Press [y] to setup ${LOCAL_DOMAIN_URL} " -n 1 -r
 
-	printf "\n"
+	printf "\n\n"
 
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
+		printf "=domain=> Working on ${DOMAIN}\n"
+		sleep 1
+
 		wp_core_download
 		mysql_create_database
 		wp_core_config
@@ -247,8 +255,8 @@ function install_domain() {
 		update_apache
 		log_domain
 
-		printf "===> Ctrl+Click to open: ${LOCAL_DOMAIN_URL}/wp-admin/\n"
-		printf "		Import Unit Data: domain import ${DOMAIN}\n\n"
+		printf "=domain=> Ctrl+Click To Open: ${LOCAL_DOMAIN_URL}/wp-admin/\n"
+		printf "          To Import Unit Data: domain import ${DOMAIN}\n\n"
 	fi
 }
 

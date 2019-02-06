@@ -43,7 +43,7 @@ function wp_import () {
 function import() {
 	# Required
     if [[ $1 == "" ]]; then
-	    echo $0: "example ==> domain import domainname.extension"
+	    echo $0: "=domain=> usage example: domain import domainname.extension"
 	    return 1
     fi
 
@@ -57,11 +57,14 @@ function import() {
 	printf "\n"
 
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
+		printf "=domain=> Working on ${DOMAIN}\n"
+		sleep 1
+
 		get_xml_file
 		activate_importer
 		wp_import
 
-		printf "===> Ctrl+Click to open: ${LOCAL_DOMAIN_URL}\n\n"
+		printf "=domain=> Ctrl+Click To Open: ${LOCAL_DOMAIN_URL}\n\n"
 	fi
 }
 
