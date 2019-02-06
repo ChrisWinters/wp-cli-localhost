@@ -4,11 +4,6 @@
 #
 # @cmd ./install.sh
 #
-# 1) Updates .bashrc
-# 2) Creates config.sh
-# 3) Creates domains.log
-# 4) Sets File Permissions
-#
 # @version 1.0.0
 #
 # @author Chris Winters https://github.com/ChrisWinters
@@ -20,28 +15,20 @@
 source domain-config.sh
 
 
-# Update .bashrc if domain function not set
-update_bashrc() {
-	if [[ -n "$(type -t domain)" ]] && [[ "$(type -t domain)" = function ]]; then
-		printf "==> WP-Cli-Localhost Already Installed\n"
-		printf "===> To Configure, open: config.sh\n\n"
-		printf "      Commands To Use:\n"
-		printf "        Install: domain install domainname.extension\n"
-		printf "        Remove : domain remove domainname.extension\n"
-		printf "        Update : domain update domainname.extension\n"
-		printf "        Update : domain update all\n\n"
+# Create Local .domain-bashrc File
+create_domain_bashrc() {
+	# Remove Old File
+	if [[ -f ${WP_CLI_LOCALHOST_PATH}/.domain-bashrc ]]; then
+		rm ${WP_CLI_LOCALHOST_PATH}/.domain-bashrc
+	fi
 
-		create_domain_list_log
-		create_user_config
-		update_permissions
-	else
-		# Add Function To .bashrc
-		echo -e  "
+	# Generate File
+	echo -e  "
 # Domain Shell Function
 domain() {
     # Two Args Required
     if [[ \$# -ne 2 ]]; then
-        echo \$0: \"example ==> domain install|remove|update domainname.extension\"
+        echo \$0: \"example ==> domain install|remove|import|update domainname.extension\"
         return 1
     fi
 
@@ -57,6 +44,12 @@ domain() {
     if [[ \$1 == \"remove\" ]] && [[ \$2 != \"\" ]]; then
         cd ${WP_CLI_LOCALHOST_PATH}
         ./domain-remove.sh \$2
+    fi
+
+    # Import Test Data
+    if [[ \$1 == \"import\" ]] && [[ \$2 != \"\" ]]; then
+        cd ${WP_CLI_LOCALHOST_PATH}
+        ./domain-import.sh \$2
     fi
 
     #Update Domain(s)
@@ -79,37 +72,12 @@ domain() {
 
 # Export Alias
 export -f domain \$@
-">> ~/.bashrc
-
-		if [[ -z "$PS1" ]] ; then
-			printf "\n\n"
-		    printf "==> Almost Finished, type: source $HOME/.bashrc\n"
-		    printf "===> To Configure, open: config.sh\n\n"
-			printf "      Then Use The Commands Below:\n"
-			printf "        Install: domain install domainname.extension\n"
-			printf "        Remove : domain remove domainname.extension\n"
-			printf "        Update : domain update domainname.extension\n"
-			printf "        Update : domain update all\n\n"
-		else
-			source $HOME/.bashrc
-			printf "==> WP-Cli-Localhost Installed\n"
-		    printf "===> To Configure, open: config.sh\n\n"
-			printf "      Commands To Use:\n"
-			printf "        Install: domain install domainname.extension\n"
-			printf "        Remove : domain remove domainname.extension\n"
-			printf "        Update : domain update domainname.extension\n"
-			printf "        Update : domain update all\n\n"
-		fi
-
-		create_domain_list_log
-		create_user_config
-		update_permissions
-	fi
+" >> ${WP_CLI_LOCALHOST_PATH}/.domain-bashrc
 }
 
 
-# Create Domains Log File
-create_domain_list_log() {
+# Create Empty domains.log File
+create_domain_log() {
 	if [[ ! -f ${DOMAINS_LIST} ]]; then
 		echo "" > ${DOMAINS_LIST}
 	fi
@@ -117,7 +85,7 @@ create_domain_list_log() {
 
 
 # Create User config.sh File
-create_user_config() {
+create_config_sh() {
 	if [[ ! -f ${WP_CLI_LOCALHOST_PATH}/config.sh ]]; then
 		touch ${WP_CLI_LOCALHOST_PATH}/config.sh
 		cat > ${WP_CLI_LOCALHOST_PATH}/config.sh <<EOF
@@ -166,6 +134,53 @@ update_permissions() {
 }
 
 
+# Update .bashrc if domain function not set
+update_bashrc() {
+	if [[ -n "$(type -t domain)" ]] && [[ "$(type -t domain)" = function ]]; then
+		printf "==> WP-Cli-Localhost Already Installed\n"
+		printf "===> To Configure, open: config.sh\n\n"
+		printf "      Commands To Use:\n"
+		printf "        Install: domain install domainname.extension\n"
+		printf "        Remove : domain remove domainname.extension\n"
+		printf "        Import : domain import domainname.extension\n"
+		printf "        Update : domain update domainname.extension\n"
+		printf "        Update : domain update all\n\n"
+	else
+		# Source in .bashrc
+		echo -e  "
+source ${WP_CLI_LOCALHOST_PATH}/.domain-bashrc
+" >> ~/.bashrc
+
+		source ~/.bashrc
+
+		if [[ -z "$PS1" ]] ; then
+			printf "\n\n"
+		    printf "====> Almost Finished, type: source $HOME/.bashrc\n"
+		    printf "====> To Configure, open: config.sh\n\n"
+			printf "      Then Use The Commands Below:\n"
+			printf "        Install: domain install domainname.extension\n"
+			printf "        Remove : domain remove domainname.extension\n"
+			printf "        Import : domain import domainname.extension\n"
+			printf "        Update : domain update domainname.extension\n"
+			printf "        Update : domain update all\n\n"
+		    printf "====> Almost Finished, type: source $HOME/.bashrc\n"
+		    printf "====> To Configure, open: config.sh\n\n"
+		else
+			source $HOME/.bashrc
+			printf "==> WP-Cli-Localhost Installed\n\n"
+		    printf "====> To Configure, open: config.sh\n\n"
+			printf "      Commands To Use:\n"
+			printf "        Install: domain install domainname.extension\n"
+			printf "        Remove : domain remove domainname.extension\n"
+			printf "        Import : domain import domainname.extension\n"
+			printf "        Update : domain update domainname.extension\n"
+			printf "        Update : domain update all\n\n"
+		    printf "====> To Configure, open: config.sh\n\n"
+		fi
+	fi
+}
+
+
 # Run Install
 function install() {
 	# Start Display
@@ -179,6 +194,10 @@ function install() {
 
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 
+		create_domain_bashrc
+		create_domain_log
+		create_config_sh
+		update_permissions
 		update_bashrc
 
 	fi

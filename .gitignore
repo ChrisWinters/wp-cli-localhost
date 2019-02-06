@@ -3,3 +3,5 @@
 stage.sh
 config.sh
 domains.log
+.domain-bashrc
+*.wordpress.xml

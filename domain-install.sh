@@ -4,18 +4,6 @@
 #
 # @cmd domain install domainname.extension
 #
-# 01) Downloads & Installs WordPress
-# 02) Creates WordPress Database
-# 03) Creates wp-config.php File
-# 04) Automatic 5 Minute Install
-# 05) Creates .htaccess & php.ini
-# 06) Downloads & Installs Dev Plugins
-# 07) Cleans Up WordPress
-# 08) Setup WordPress
-# 09) Update /etc/hosts File
-# 10) Update & Restart Apache
-# 11) Logs Installed Domain
-#
 # @version 1.0.0
 #
 # @author Chris Winters https://github.com/ChrisWinters
@@ -259,7 +247,8 @@ function install_domain() {
 		update_apache
 		log_domain
 
-		printf "===> Domain Ready: ${LOCAL_DOMAIN_URL}/wp-admin/\n\n"
+		printf "===> Ctrl+Click to open: ${LOCAL_DOMAIN_URL}/wp-admin/\n"
+		printf "		Import Unit Data: domain import ${DOMAIN}\n\n"
 	fi
 }
 

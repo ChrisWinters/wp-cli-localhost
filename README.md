@@ -1,20 +1,21 @@
-# Shell Scripts For WordPress Theme & WordPress Plugin Developers - WP-Cli-Localhost
+# Shell Scripts For WordPress Theme & WordPress Plugin Developers - WP-Cli-Localhost v1.1.0
 
 Created for WordPress Theme and WordPress Plugin developers. WP-Cli-Localhost is a collection of shell scripts that interface with wp-cli to allow for quick and easy management of locally hosted WordPress websites.
 
-1) Rapid Setup of Localhost Domain & WordPress
+1) Run With Alias Shell Function Command "domain"
+	* Works From Any Location
+2) Rapid Setup of Localhost Domain & WordPress
 	* Automatically Updates Apache and /etc/hosts
 	* Cleans WordPress Setup, No Content
 	* Developer & Debug Plugins Installed
 	* Advanced Debug Backtrace Configuration
-2) Rapid Removal of Localhost Domain & WordPress 
+3) Rapid Removal of Localhost Domain & WordPress 
 	* WordPress, Database, Apache and Hosts Configurations
-3) Automatically Update Localhost WordPress Installs
+4) Automatically Update Localhost WordPress Installs
 	* Automatically Loops Through Locally Created Domains
 		* Or Directly Target A Domain
 	* Automatically Updates WordPress, Themes, and Plugins
-4) Run With Alias Shell Function Command "domain"
-	* Works From Any Location
+5) Import WordPress Unit Test Data To Any Website
 
 
 ## Requirements
@@ -23,6 +24,7 @@ Created for WordPress Theme and WordPress Plugin developers. WP-Cli-Localhost is
 	* Built and tested on Linux Mint using Bash 4.3.11(1)-release
 2) Requires [WP-CLI](https://wp-cli.org/)
 	* Built using version 2.1.0
+3) Configuration
 
 [Git](https://git-scm.com/downloads) is optional but recommended.
 
@@ -119,7 +121,8 @@ A wish list of things that may or may not get completed.
 
 ## Credits
 
-Code to add to wp-config.php to enhance information available for debugging via [backtrace.php](https://gist.github.com/jrfnl/5925642)
+* [Enhanced Debugging](https://gist.github.com/jrfnl/5925642)
+* [Theme Unit Test Data](https://github.com/WPTRT/theme-unit-test)
 
 
 ## MIT License

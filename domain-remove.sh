@@ -4,12 +4,6 @@
 #
 # @cmd domain remove domainname.extension
 #
-# 01) Delete WordPress
-# 02) Delete WordPress Database
-# 03) Update /etc/hosts File
-# 04) Update & Restart Apache
-# 05) Remove Domain From Domain Log
-#
 # @version 1.0.0
 #
 # @author Chris Winters https://github.com/ChrisWinters

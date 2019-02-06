@@ -2,8 +2,8 @@
 #
 # Update WordPress, Plugins & Themes
 #
+# @cmd domain update all
 # @cmd domain update domainname.extension
-# @cmd domain update
 #
 # @version 1.0.0
 #
@@ -14,15 +14,15 @@
 
 # Run Updater
 update() {
-	# Source Config File
-	source domain-config.sh
-
 	# Required
     if [[ $1 == "" ]]; then
 	    echo $0: "example ==> domain update all"
 	    echo $0: "example ==> domain update domainname.extension"
 	    return 1
     fi
+
+	# Source Config File
+	source domain-config.sh
 
 	# Required
     if [[ $1 != "all" && ! -d ${SITE_PATH}/${1} ]]; then
