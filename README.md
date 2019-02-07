@@ -2,6 +2,8 @@
 
 Created for WordPress Theme and WordPress Plugin developers. WP-Cli-Localhost is a collection of shell scripts that interface with wp-cli to allow for quick and easy management of locally hosted WordPress websites.
 
+* View The [Shell Scripts For WordPress Developers Documentation](https://chriswinters.github.io/wp-cli-localhost/) On Github Pages
+
 1) Run With Alias Shell Function Command "domain"
 	* Works From Any Location
 2) Rapid Setup of Localhost Domain & WordPress
@@ -16,7 +18,6 @@ Created for WordPress Theme and WordPress Plugin developers. WP-Cli-Localhost is
 		* Or Directly Target A Domain
 	* Automatically Updates WordPress, Themes, and Plugins
 5) Import WordPress Unit Test Data To Any Website
-
 
 ## Requirements
 
