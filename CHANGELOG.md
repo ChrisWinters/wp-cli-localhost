@@ -1,5 +1,5 @@
 <a name="1.1.0"></a>
-# 1.1.0 - 2019-02-06 - Feature Release
+# 1.1.0 - 2019-02-07 - Feature Release
 
 * Added 'import' command to domain() | Imports Theme Unit Test Data
 * Moved domain() to .domain-bashrc & updated install.sh to use new source for .bashrc
